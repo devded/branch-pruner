@@ -1,0 +1,6 @@
+venv/
+cloudquicklabs11.egg-info/
+cloudquicklabs1.egg-info/
+build/
+src/__pycache__/
+branch_pruner.egg-info/
