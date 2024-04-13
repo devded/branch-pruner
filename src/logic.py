@@ -1,53 +1,46 @@
-from datetime import datetime
-import pytz
+import subprocess
+import json
 
-def area(location):
-    """This function takes in a location as argument, checks the list of locations available and returns the formatted time to the user."""
-    location = format_location(location)
-    for areas in pytz.all_timezones:
-        if location.lower() in areas.lower():
-            location = areas
-            tz = pytz.timezone(location)
-            date_now = datetime.now(tz)
-            formatted_date = date_now.strftime("%B %d, %Y %H:%M:%S")
-            print(f"{location} time: ", formatted_date)
-            break
+# Function to retrieve remote branches
+def get_remote_branches():
+    subprocess.run(['git', 'fetch', '--prune'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    result = subprocess.run(['git', 'branch', '-r'], stdout=subprocess.PIPE, text=True)
+    branches = result.stdout.splitlines()
+    branches = [branch.strip().replace('origin/', '') for branch in branches]
+    return branches
 
-    else:
-        print("This location isn't on the tz database on Wikipedia")
+# Function to delete a branch
+def delete_branch(branch):
+    subprocess.run(['git', 'push', 'origin', '--delete', branch])
+    print("Deleted branch:", branch)
 
-def area_zone(zone):
-    """This function takes in a time zone as argument, checks the list of timezones and returns the formatted time to the user."""
-    try:
-        zone = timezones(zone)
-        tz = pytz.timezone(zone)
-        date_now = datetime.now(tz)
-        formatted_date = date_now.strftime("%B %d, %Y %H:%M:%S")
-        print(f"{zone} time: ", formatted_date)
+def get_valid_branches(branch_list):
+    # List of branches to exclude from deletion
+    new_branch_list = json.loads(branch_list)
+    print(new_branch_list)
+    branches_to_exclude = [
+        'HEAD -> master',
+        'master',
+        'staging',
+    ]
+    branches_to_exclude.extend(new_branch_list)
+    print(branches_to_exclude)
+    # Get all remote branches and exclude specified branches
+    all_remote_branches = get_remote_branches()
+    all_remote_branches = [branch for branch in all_remote_branches if branch not in branches_to_exclude]
+    return all_remote_branches
 
-    except Exception:
-        print("Timezone is not on the list. Consider using location instead.")
+def view_branches(branch_list):
+    # Delete the remaining branches
+    branches = get_valid_branches(branch_list)
+    for branch in branches:
+        print("View:", branch)
+        # Uncomment the line below to actually delete the branches
+        # delete_branch(branch)
 
-def timezones(zone):
-    """This function is used to handle situations of Daylight Saving Time that the standard library can't recognize."""
-    zones = {
-        "PDT": "PST8PDT",
-        "MDT": "MST7MDT",
-        "EDT": "EST5EDT",
-        "CDT": "CST6CDT",
-        "WAT": "Etc/GMT+1",
-        "ACT": "Australia/ACT",
-        "AST": "Atlantic/Bermuda",
-        "CAT": "Africa/Johannesburg",
-    }
 
-    try:
-        zones[zone]
 
-    except:
-        return zone
-    return zones[zone]
 
-def format_location(location):
-    location = location.replace(" ", "_")
-    return location
+def log_message(msg):
+    a = " " + msg + " "
+    print(f"{a.center(len(a) +40, '=')}")

@@ -1,20 +1,31 @@
 import click
-from src.logic import area, area_zone
-
+from src.logic import view_branches, log_message
+import json
 @click.command()
 @click.option(
-    "--location",
-    help="This specifies the location you want to know the time. For example, Lagos or London",
+    "--r",
+    help="This remove the braches",
 )
 @click.option(
-    "--zone",
-    help="The timezone information you need. Ensure it is properly capitalized, for example CET or WAT",
+    "--v",
+    help="The show the branch list that will picked for delete",
 )
-def main(location, zone):
-    if location:
-        area(location)
-    if zone:
-        area_zone(zone)
+
+
+def main(r, v):
+    if r:
+        log_message("Removing branches that are picked for removal")
+        print(f"r: {r}")
+    
+    if v:
+        log_message("Viewing branches that are picked for removal")
+        print(json.loads(v))
+        view_branches(v)
+       
+    # if location:
+    #     area(location)
+    # if zone:
+    #     area_zone(zone)
 
 if __name__ == "__main__":
     main()
