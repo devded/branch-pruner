@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="cloudquicklabs1",
-    version="0.0.4",
-    author="Rekhu Chinnarathod",
-    author_email="vrchinnarathod@gmail.com",
-    url="https://www.youtube.com/channel/UCv9MUffHWyo2GgLIDLVu0KQ",
-    description="An application that informs you of the time in different locations and timezones",
+    name="branch-pruner",
+    version="0.0.1",
+    author="Dedar Alam",
+    author_email="devded@pm.me",
+    url="https://github.com/devded/branch-pruner",
+    description="Remove unecessary branches from git repository",
     packages=find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -14,5 +14,5 @@ setup(
         "Operating System :: OS Independent",
     ],
     install_requires=["click", "pytz"],
-    entry_points={"console_scripts": ["cloudquicklabs1 = src.main:main"]},
+    entry_points={"console_scripts": ["branch-pruner = src.main:main"]},
 )
