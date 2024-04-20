@@ -15,20 +15,16 @@ def delete_branch(branch):
     print("Deleted branch:", branch)
 
 def get_valid_branches(branch_list):
-    # List of branches to exclude from deletion
-    new_branch_list = json.loads(branch_list)
-    # print(new_branch_list)
+    whitelist = json.loads(branch_list)
     branches_to_exclude = [
         'HEAD -> master',
         'master',
         'main',
     ]
-    branches_to_exclude.extend(new_branch_list)
-    # print(branches_to_exclude)
-    # Get all remote branches and exclude specified branches
-    all_remote_branches = get_remote_branches()
-    all_remote_branches = [branch for branch in all_remote_branches if branch not in branches_to_exclude]
-    return all_remote_branches
+    branches_to_exclude.extend(whitelist)
+    remote_branches = get_remote_branches()
+    branches = [branch for branch in remote_branches if branch not in branches_to_exclude]
+    return branches
 
 def view_branches(branch_list):
     branches = get_valid_branches(branch_list)
