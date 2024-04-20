@@ -1,5 +1,5 @@
 import click
-from src.logic import view_branches, log_message
+from src.logic import view_branches, log_message, delete_branches
 import json
 @click.command()
 @click.option(
@@ -14,18 +14,11 @@ import json
 
 def main(r, v):
     if r:
-        log_message("Removing branches that are picked for removal")
+        delete_branches(r)
         print(f"r: {r}")
-    
     if v:
-        log_message("Viewing branches that are picked for removal")
         print(json.loads(v))
         view_branches(v)
-       
-    # if location:
-    #     area(location)
-    # if zone:
-    #     area_zone(zone)
 
 if __name__ == "__main__":
     main()

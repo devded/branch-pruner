@@ -21,7 +21,7 @@ def get_valid_branches(branch_list):
     branches_to_exclude = [
         'HEAD -> master',
         'master',
-        'staging',
+        'main',
     ]
     branches_to_exclude.extend(new_branch_list)
     print(branches_to_exclude)
@@ -32,12 +32,25 @@ def get_valid_branches(branch_list):
 
 def view_branches(branch_list):
     # Delete the remaining branches
+    log_message("Viewing branches that are picked for removal")
     branches = get_valid_branches(branch_list)
     for branch in branches:
         print("View:", branch)
         # Uncomment the line below to actually delete the branches
         # delete_branch(branch)
-
+        
+def delete_branches(branch_list):
+ # Delete the remaining branches
+    log_message("Viewing branches that are picked for removal")
+    branches = get_valid_branches(branch_list)
+    user_input = input("Do you want to continue? (y/n): ")
+    # print(f"user_input {user_input}")
+    if user_input == "y":
+        log_message("Removing branches that are picked for removal")
+        for branch in branches:
+            print("View:", branch)
+            # Uncomment the line below to actually delete the branches
+            # delete_branch(branch)
 
 
 
