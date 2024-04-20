@@ -15,9 +15,9 @@ import json
 def main(r, v):
     if r:
         delete_branches(r)
-        print(f"r: {r}")
+        # print(f"r: {r}")
     if v:
-        print(json.loads(v))
+        # print(json.loads(v))
         view_branches(v)
 
 if __name__ == "__main__":

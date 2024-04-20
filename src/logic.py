@@ -17,14 +17,14 @@ def delete_branch(branch):
 def get_valid_branches(branch_list):
     # List of branches to exclude from deletion
     new_branch_list = json.loads(branch_list)
-    print(new_branch_list)
+    # print(new_branch_list)
     branches_to_exclude = [
         'HEAD -> master',
         'master',
         'main',
     ]
     branches_to_exclude.extend(new_branch_list)
-    print(branches_to_exclude)
+    # print(branches_to_exclude)
     # Get all remote branches and exclude specified branches
     all_remote_branches = get_remote_branches()
     all_remote_branches = [branch for branch in all_remote_branches if branch not in branches_to_exclude]
@@ -35,7 +35,7 @@ def view_branches(branch_list):
     log_message("Viewing branches that are picked for removal")
     branches = get_valid_branches(branch_list)
     for branch in branches:
-        print("View:", branch)
+        print(branch)
         # Uncomment the line below to actually delete the branches
         # delete_branch(branch)
         
@@ -43,6 +43,8 @@ def delete_branches(branch_list):
  # Delete the remaining branches
     log_message("Viewing branches that are picked for removal")
     branches = get_valid_branches(branch_list)
+    for branch in branches:
+        print(branch)
     user_input = input("Do you want to continue? (y/n): ")
     # print(f"user_input {user_input}")
     if user_input == "y":
@@ -50,7 +52,7 @@ def delete_branches(branch_list):
         for branch in branches:
             print("View:", branch)
             # Uncomment the line below to actually delete the branches
-            # delete_branch(branch)
+            delete_branch(branch)
 
 
 
