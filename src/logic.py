@@ -31,30 +31,24 @@ def get_valid_branches(branch_list):
     return all_remote_branches
 
 def view_branches(branch_list):
-    # Delete the remaining branches
-    log_message("Viewing branches that are picked for removal")
     branches = get_valid_branches(branch_list)
+    print_branches(branches)
+   
+def print_branches(branches):
+    log_message("Viewing branches that are picked for removal")
     for branch in branches:
         print(branch)
-        # Uncomment the line below to actually delete the branches
-        # delete_branch(branch)
+
         
 def delete_branches(branch_list):
- # Delete the remaining branches
-    log_message("Viewing branches that are picked for removal")
     branches = get_valid_branches(branch_list)
-    for branch in branches:
-        print(branch)
+    print_branches(branches)
     user_input = input("Do you want to continue? (y/n): ")
-    # print(f"user_input {user_input}")
+    
     if user_input == "y":
         log_message("Removing branches that are picked for removal")
         for branch in branches:
-            print("View:", branch)
-            # Uncomment the line below to actually delete the branches
             delete_branch(branch)
-
-
 
 def log_message(msg):
     a = " " + msg + " "
